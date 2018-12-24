@@ -65,24 +65,40 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
-# Simple Sequential model
-model = Sequential()
-model.add(Dense(4, input_shape=(2,), activation="tanh", name="Hidden-1"))
-model.add(Dense(4, activation="tanh", name="Hidden-2"))
-# Add a Dense Fully Connected Layer with 1 neuron. Using input_shape = (2,) says the input will
-#  be arrays of the form (*,2). The first dimension will be unspecified
-#  number of batches (rows) of data. The second dimension is 2 which are the X, Y positions of each data element.
-#  The sigmoid activation function is used to return 0 or 1, signifying the data
-#  cluster the position is predicted to belong to.
-model.add(Dense(1, activation="sigmoid", name="Output_layer"))
+# # Simple Sequential model
+# model = Sequential()
+# model.add(Dense(4, input_shape=(2,), activation="tanh", name="Hidden-1"))
+# model.add(Dense(4, activation="tanh", name="Hidden-2"))
+# # Add a Dense Fully Connected Layer with 1 neuron. Using input_shape = (2,) says the input will
+# #  be arrays of the form (*,2). The first dimension will be unspecified
+# #  number of batches (rows) of data. The second dimension is 2 which are the X, Y positions of each data element.
+# #  The sigmoid activation function is used to return 0 or 1, signifying the data
+# #  cluster the position is predicted to belong to.
+# model.add(Dense(1, activation="sigmoid", name="Output_layer"))
+
+#Implement as Functional API 
+from keras.models import Model
+from keras.layers import Input#
+inputs = Input(shape=(2,))
+# Hidden layers
+x = Dense(4, activation="tanh", name="Hidden-1")(inputs)
+x = Dense(4, activation="tanh", name="Hidden-2")(x)
+# Output Layer
+o = Dense(1, activation="sigmoid", name="Output_layer")(x)
+# Create Model and specify the input and output
+model = Model(inputs=inputs, outputs=o) 
+# Display summary
 model.summary()
 # Compile the model. Minimize crossentropy for a binary. Maximize for accuracy
 model.compile(Adam(lr=0.05), 'binary_crossentropy', metrics=['accuracy'])
 from keras.utils import plot_model
 plot_model(model, to_file="model.png", show_shapes=True, show_layer_names=True)
+# Define early stopping callback - stops learning process whean NN stops improving
+from keras.callbacks import EarlyStopping
+my_callbacks = [EarlyStopping(monitor='acc', patience=5, mode=max)]
 # Fit the model with the data from make_blobs. Make 100cycles through the data
 #  Set verbose to 0 to supress progress messages
-model.fit(X_train, y_train, epochs=100, verbose=1)
+model.fit(X_train, y_train, epochs=100, verbose=1, callbacks=my_callbacks)
 # Get loss and accuracy on test data
 eval_result = model.evaluate(X_test, y_test)
 # Print test accuracy
