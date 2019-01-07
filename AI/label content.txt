@@ -1,0 +1,10 @@
+label 0 - 20
+label 1 - 30
+label 2 - 50
+label 3 - 60
+label 4 - 70
+label 5 - 80
+label 6 - zak 80
+label 7 - 100
+label 8 - 120
+label 9 - 
