@@ -36,6 +36,16 @@ def load_dataset(root_path):
     return images, labels
 
 
+def load_test_data(root_path):
+    images = []
+    label_directory = os.path.join(root_path)
+    file_names = [os.path.join(label_directory, f)
+                  for f in os.listdir(label_directory) if f.endswith(".ppm")]
+    for f in file_names:
+        images.append(skimage.data.imread(f))
+    return images
+
+
 """ self explanatory - from https://hackernoon.com/automatic-recognition-of-speed-limit-signs-deep-learning-with-keras-and-tensorflow-310d90af9826 """
 
 

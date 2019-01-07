@@ -4,6 +4,7 @@ import normalize_data
 """Supress warning and infomational messages"""
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ["PATH"] += os.pathsep + 'C:/MyProject/Graphviz2.38/bin/'
 """Keras is a library used for create Neural Network"""
 import keras
 from keras.models import Model
@@ -27,13 +28,10 @@ import csv
 import numpy as np
 
 training_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images'
-# test_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Test_Images/GTSRB/Final_Test/Images'
 
 load_images, load_labels = normalize_data.load_dataset(training_root_path)
-# test_images, test_labels = load_dataset(test_root_path)
 
 normalized_training_images = normalize_data.normalize_images(load_images)
-# normalized_test_images = normalize_images(test_images)
 
 """
 # Print to double check
