@@ -46,6 +46,10 @@ def load_test_data(root_path):
     return images
 
 
+def load_single_test_image(root_path):
+    return [skimage.data.imread(root_path)]
+
+
 """ self explanatory - from https://hackernoon.com/automatic-recognition-of-speed-limit-signs-deep-learning-with-keras-and-tensorflow-310d90af9826 """
 
 
