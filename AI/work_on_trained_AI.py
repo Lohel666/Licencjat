@@ -48,7 +48,7 @@ def collect_results(prediction):
 
 
 """Load NN and print some prarameters of saved neural network"""
-loaded_NN = load_model('road_signs_no_early_pooling.h5')
+loaded_NN = load_model('C:/MyProject/AI/road_signs_no_early_pooling.h5')
 print(loaded_NN.summary())
 print(loaded_NN.get_weights())  # print weights of trained model
 print(loaded_NN.optimizer)
