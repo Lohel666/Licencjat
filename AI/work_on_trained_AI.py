@@ -11,31 +11,70 @@ import numpy as np
 
 
 def decode_preditcion(sign_list):
-    Decoded_signs = []
+    decoded_signs_list = []
     for i in sign_list:
-        Decoded_signs.append(set_sign(i))
-    return Decoded_signs
+        decoded_signs_list.append(set_sign(i))
+    return decoded_signs_list
 
 
-"""Definition only for speed limit signs, other recognised signs are categorised as "Inny znak drogowy" """
+"""
+Categorizes int to road sign type
+"""
 
 
 def set_sign(sign):
     switcher = {
-        0: "20 km/h",
-        1: "30 km/h",
-        2: "50 km/h",
-        3: "60 km/h",
-        4: "70 km/h",
-        5: "80 km/h",
+        0: "Ograniczenie prędkości 20 km/h",
+        1: "Ograniczenie prędkości 30 km/h",
+        2: "Ograniczenie prędkości 50 km/h",
+        3: "Ograniczenie prędkości 60 km/h",
+        4: "Ograniczenie prędkości 70 km/h",
+        5: "Ograniczenie prędkości 80 km/h",
         6: "Koniec ograniczenia prędkości 80 km/h",
-        7: "100 km/h",
-        8: "120 km/h"
+        7: "Ograniczenie prędkości 100 km/h",
+        8: "Ograniczenie prędkości 120 km/h",
+        9: "Zakaz wyprzedzania",
+        10: "Zakaz wyprzedzania przez samochody ciężarowe",
+        11: "Skrzyżowanie z drogą podporządkowaną występującą po obu stronach",
+        12: "Droga z pierwszeństwem",
+        13: "Ustąp pierwszeństwa",
+        14: "STOP",
+        15: "Zakaz ruchu w obu kierunkach",
+        16: "Zakaz wjazdu samochodów ciężarowych",
+        17: "Zakaz wjazdu",
+        18: "Inne niebezpieczeństwo",
+        19: "Niebezpieczny zakręt w lewo",
+        20: "Niebezpieczny zakręt w prawo",
+        21: "Niebezpieczne zakręty, pierwszy w lewo",
+        22: "Nierówna droga",
+        23: "Śliska jezdnia",
+        24: "Zwężenie jezdni - prawostronne",
+        25: "Roboty drogowe",
+        26: "Sygnały świetlne",
+        27: "Przejście dla pieszych",
+        28: "Dzieci",
+        29: "Rowerzyści",
+        30: "Oszronienie jezdni",
+        31: "Zwierzęta dzikie",
+        32: "Koniec zakazów",
+        33: "Nakaz jazdy w prawo za znakiem",
+        34: "Nakaz jazdy w lewo za znakiem",
+        35: "Nakaz jazdy prosto",
+        36: "Nakaz jazdy prosto lub w prawo",
+        37: "Nakaz jazdy prosto lub w lewo",
+        38: "Nakaz jazdy z prawej strony znaku",
+        39: "Nakaz jazdy z lewej strony znaku",
+        40: "Ruch okrężny",
+        41: "Koniec zakazu wyprzedzania",
+        42: "Koniec zakazu wyprzedzania przez samochody ciężarowe"
     }
-    return switcher.get(sign, "Inny znak drogowy")
+    return switcher.get(sign, "Nie rozpoznany znak drogowy")
 
 
-""" Collects results from predictions and makes a list"""
+""" 
+Recives a list of vectors with predictions, and from each vector gets the index of max probablity
+(witch will be further convert to road sign type)
+"""
 
 
 def collect_results(prediction):
@@ -63,7 +102,13 @@ test_images = nd.load_test_data(test_root_path)
 normalized_test_images = nd.normalize_images(test_images)
 x_test = np.array(normalized_test_images)
 
-"""Run NN to recognise a road sign"""
+"""
+Run NN to recognise a road sign
+returns a list of vectors. Every vector contain a probablity that image belongs to one of the signs type
+then from every vector gets the index of the max elemnt (max probability of prediction of specific road sign)
+finally converts the specific index to road sign description
+"""
+
 prediction = loaded_NN.predict(x_test)
 
 result_list = collect_results(prediction)

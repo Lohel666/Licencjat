@@ -76,7 +76,7 @@ def normalize_images(load_images):
 """
 Following method will print labels with miniature picture that we can verifi our label-image sets
 """
-# show_data_classes(load_images, load_labels)
+# show_data_classes(load_dataset(training_root_path))
 """
 We need to normalize loaded images because neural network hads to got input of the same size.
 following loop is used to check what is common size of image in Dataset
