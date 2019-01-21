@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import csv
 
 training_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images'
-training_normalized_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Normalized-Images'
+# training_normalized_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Normalized-Images'
 # test_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Test_Images/GTSRB/Final_Test/Images'
 
 """

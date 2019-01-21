@@ -27,7 +27,7 @@ import csv
 """NumPy is the fundamental package for scientific computing with Python"""
 import numpy as np
 
-training_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images'
+training_root_path = 'C:\MyProject\Datasets\GTSRB_Final_Test_Images\GTSRB\Final_Training\Images'
 
 load_images, load_labels = normalize_data.load_dataset(training_root_path)
 
