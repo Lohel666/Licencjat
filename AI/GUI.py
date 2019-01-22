@@ -1,82 +1,83 @@
-import work_on_trained_AI as AI
-import tkinter
 from tkinter import *
+from PIL import Image, ImageTk
+import work_on_trained_AI as AI
 from tkinter.filedialog import askopenfilename
-import cv2
-import PIL.Image
-import PIL.ImageTk
-
-path = 'C:/MyProject/Datasets/GTSRB_Final_Test_Images/GTSRB/Final_Test/All Images/00000.ppm'
 
 
-def decode_road_sign():
-    try:
-        if(E1.get()):
-            path = E1.get()
-            sign = AI.recognise_road_sign(path)
-            recognition_text_box.set(sign[0])
-            show_image(path)
-        else:
-            recognition_text_box.set('Empty path')
-    except:
-        recognition_text_box.set('File does not exist / wrong path')
-    Message(root, textvariable=recognition_text_box, relief=RAISED)
+class Window(Frame):
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
 
+        self.master = master
+        self.init_window()
 
-def chose_file():
-    path = askopenfilename()
-    sign = AI.recognise_road_sign(path)
-    recognition_text_box.set(sign[0])
-    Message(root, textvariable=recognition_text_box, relief=RAISED)
-    show_image(path)
+    def init_window(self):
+        self.master.title("AI - road signs")
+        self.pack(fill=BOTH, expand=1)
 
+        width = self.master.winfo_width()+400
+        height = self.master.winfo_height()+250
+        x = (self.master.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.master.winfo_screenheight() // 2) - (height // 2)
+        self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.master.resizable(False, False)
 
-def show_image(path):
-    ""
+        menu = Menu(self.master)
+        self.master.config(menu=menu)
+        file = Menu(menu)
+        file.add_command(label='Open image', command=self.load_image)
+        file.add_command(label='Exit', command=self.client_exit)
+        menu.add_cascade(label='File', menu=file)
+        text_box.set("Let's start!")
+
+        B1 = Button(root, text="Select image ", command=self.load_image)
+        B1.place(x=160, y=50)
+
+        L1 = Label(root, text="Path")
+        L1.place(x=10, y=95)
+
+        self.E1 = Entry(root, bd=5, width=47)
+        self.E1.place(x=40, y=95)
+
+        B2 = Button(root, text="Identify ", command=self.decode_road_sign)
+        B2.place(x=340, y=95)
+
+    def load_image(self):
+        path = askopenfilename()
+        sign = AI.recognise_road_sign(path)
+        text_box.set(sign[0])
+        Message(root, textvariable=text_box, relief=RAISED)
+        self.show_image(path)
+
+    def show_image(self, path):
+        load = Image.open(path).resize((64, 64))
+        render = ImageTk.PhotoImage(load)
+        img = Label(self, image=render)
+        img.image = render
+        img.place(x=164, y=132)
+
+    def client_exit(self):
+        exit()
+
+    def decode_road_sign(self):
+        try:
+            if(self.E1.get()):
+                path = self.E1.get()
+                sign = AI.recognise_road_sign(path)
+                text_box.set(sign[0])
+                self.show_image(path)
+            else:
+                text_box.set('ERR: decode_road_sign')
+        except:
+            text_box.set('File does not exist / wrong path')
+        Message(root, textvariable=text_box, relief=RAISED)
 
 
 root = Tk()
-
-
-def window(main):
-    main.title("AI - road signs")
-    main.update_idletasks()
-    width = main.winfo_width()+200
-    height = main.winfo_height()+400
-    x = (main.winfo_screenwidth() // 2) - (width // 2)
-    y = (main.winfo_screenheight() // 2) - (height // 2)
-    main.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-    main.resizable(False, False)
-    frame = Frame(root)
-    frame.pack()
-
-
-window(root)
-
-bottomframe = Frame(root)
-bottomframe.pack(side=BOTTOM)
-
-recognition_text_box = StringVar()
-recognition_text_box.set("Empty")
-
-Message(root, textvariable=recognition_text_box,
+text_box = StringVar()
+Message(root, textvariable=text_box,
         relief=RAISED, pady=5, padx=5, width=300).pack()
 
-L1 = Label(root, text="Path")
-L1.place(x=50, y=50)
 
-E1 = Entry(root, bd=5, width=40)
-E1.place(x=100, y=50)
-
-B1 = Button(root, text="Select image ", command=chose_file)
-B1.place(x=50, y=95)
-
-B2 = Button(root, text="Identify ", command=decode_road_sign,
-            bd=5, font='Arial 9 bold')
-B2.place(x=175, y=125)
-
-image = tkinter.PhotoImage(file=path)
-label = tkinter.Label(bottomframe, image=image)
-label.pack()
-
+app = Window(root)
 root.mainloop()
