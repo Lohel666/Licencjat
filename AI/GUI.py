@@ -8,6 +8,9 @@ class Window(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
 
+        self.E1 = Entry(root, bd=5, width=47)
+        self.E1.place(x=40, y=95)
+
         self.master = master
         self.init_window()
 
@@ -30,17 +33,14 @@ class Window(Frame):
         menu.add_cascade(label='File', menu=file)
         text_box.set("Let's start!")
 
-        B1 = Button(root, text="Select image ", command=self.load_image)
-        B1.place(x=160, y=50)
+        button_1 = Button(root, text="Select image ", command=self.load_image)
+        button_1.place(x=160, y=50)
 
-        L1 = Label(root, text="Path")
-        L1.place(x=10, y=95)
+        label_1 = Label(root, text="Path")
+        label_1.place(x=10, y=95)
 
-        self.E1 = Entry(root, bd=5, width=47)
-        self.E1.place(x=40, y=95)
-
-        B2 = Button(root, text="Identify ", command=self.decode_road_sign)
-        B2.place(x=340, y=95)
+        button_2 = Button(root, text="Identify ", command=self.decode_road_sign)
+        button_2.place(x=340, y=95)
 
     def load_image(self):
         path = askopenfilename()
@@ -61,7 +61,7 @@ class Window(Frame):
 
     def decode_road_sign(self):
         try:
-            if(self.E1.get()):
+            if self.E1.get():
                 path = self.E1.get()
                 sign = AI.recognise_road_sign(path)
                 text_box.set(sign[0])
@@ -72,12 +72,9 @@ class Window(Frame):
             text_box.set('File does not exist / wrong path')
         Message(root, textvariable=text_box, relief=RAISED)
 
-
 root = Tk()
 text_box = StringVar()
 Message(root, textvariable=text_box,
         relief=RAISED, pady=5, padx=5, width=300).pack()
-
-
 app = Window(root)
 root.mainloop()

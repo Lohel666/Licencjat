@@ -6,9 +6,7 @@ import skimage.data
 import skimage.transform
 
 """Matplotlib is a library used for data visualization"""
-import matplotlib
 import matplotlib.pyplot as plt
-import csv
 
 training_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Images'
 # training_normalized_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Training_Images/GTSRB/Final_Training/Normalized-Images'

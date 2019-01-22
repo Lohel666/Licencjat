@@ -12,7 +12,7 @@ import numpy as np
 trained_NN_path = 'C:/MyProject/AI/road_signs_no_early_pooling.h5'
 loaded_NN = load_model(trained_NN_path)
 
-def decode_preditcion(sign_list):
+def decode_prediction(sign_list):
     decoded_signs_list = []
     for i in sign_list:
         decoded_signs_list.append(set_sign(i))
@@ -74,7 +74,7 @@ def set_sign(sign):
 
 
 """ 
-Recives a list of vectors with predictions, and from each vector gets the index of max probablity
+Receives a list of vectors with predictions, and from each vector gets the index of max probablity
 (witch will be further convert to road sign type)
 """
 
@@ -94,16 +94,16 @@ def load_neural_network(path):
 
 
 def recognise_road_sign(image_path):
-    # this code could be more compact, but less redable
+    # this code could be more compact, but less readable
     image = nd.load_single_test_image(image_path) # load image from path to array
     normalized_image = nd.normalize_images(image) # normalize image
-    numpy_array = np.array(normalized_image) # load mormalized image to numpy array
+    numpy_array = np.array(normalized_image) # load normalized image to numpy array
     probability = loaded_NN.predict(numpy_array) # runs NN and returns vector of probabilities
     prediction = collect_results(probability) # return the type of road sign (int 0-42) 
-    decoded_prediction = decode_preditcion(prediction) # decode int to road sign description 
+    decoded_prediction = decode_prediction(prediction) # decode int to road sign description
     return decoded_prediction
 
-def egzample_of_group_recogniton():
+def example_of_group_recognition():
     """Load NN and print some prarameters of saved neural network"""
     loaded_NN = load_neural_network(trained_NN_path)
     print(loaded_NN.summary())
@@ -114,7 +114,7 @@ def egzample_of_group_recogniton():
     plot_model(loaded_NN, to_file='model_plot.png',
             show_shapes=True, show_layer_names=True)
 
-    """Load some data to catrgorize"""
+    """Load some data to categorize"""
     test_root_path = 'C:/MyProject/Datasets/GTSRB_Final_Test_Images/GTSRB/Final_Test/Images'
     test_images = nd.load_test_data(test_root_path)
     normalized_test_images = nd.normalize_images(test_images)
@@ -127,5 +127,5 @@ def egzample_of_group_recogniton():
     """
     prediction = loaded_NN.predict(x_test)
     result_list = collect_results(prediction)
-    print("\n".join(decode_preditcion(result_list)))
+    print("\n".join(decode_prediction(result_list)))
 

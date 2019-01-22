@@ -7,7 +7,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ["PATH"] += os.pathsep + 'C:/MyProject/Graphviz2.38/bin/'
 """Keras is a library used for create Neural Network"""
 import keras
-from keras.models import Model
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Input
 from keras.layers import Conv2D, MaxPooling2D
@@ -20,9 +19,7 @@ from keras.utils.np_utils import to_categorical
 from sklearn.model_selection import train_test_split
 
 """Matplotlib is a library used for data visualization"""
-import matplotlib
 import matplotlib.pyplot as plt
-import csv
 
 """NumPy is the fundamental package for scientific computing with Python"""
 import numpy as np
