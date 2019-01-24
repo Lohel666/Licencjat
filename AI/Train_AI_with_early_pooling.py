@@ -60,7 +60,7 @@ model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                     activation='relu'))
 """early pooling layers"""
-# model.add(MaxPooling2D(pool_size=(2, 2))) # removal of first pooling layer causes increase of accuracy
+model.add(MaxPooling2D(pool_size=(2, 2))) # removal of first pooling layer causes increase of accuracy
 """2nd convolutional layer with pooling layer"""
 model.add(Conv2D(32, (3, 3), activation='relu'))  
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -101,12 +101,12 @@ hist = model.fit(x_train, y_train,
                 validation_data=(x_validation, y_validation))
 
 """Save trained model to file"""
-model.save('road_signs_no_early_pooling.h5')
+model.save('road_signs_with_early_pooling.h5')
 
 """Print params of NN, visualizes the model"""
 print(model.summary())
 """need to install Grphiz, and set env path"""
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+plot_model(model, to_file='model_plot2.png', show_shapes=True, show_layer_names=True)
 
 """Evaluate the model with the test data to get the scores on "real" data."""
 score = model.evaluate(x_validation, y_validation, verbose=0)
