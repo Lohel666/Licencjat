@@ -2,14 +2,18 @@ from tkinter import *
 from PIL import Image, ImageTk
 import work_on_trained_AI as AI
 from tkinter.filedialog import askopenfilename
+from random import randint
 
-
+test_folder_path='C:/MyProject/Datasets/GTSRB_Final_Test_Images/GTSRB/Final_Test/All Images'
 class Window(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
 
-        self.E1 = Entry(root, bd=5, width=47)
-        self.E1.place(x=40, y=95)
+        # turn off manual input
+        # self.E1 = Entry(root, bd=5, width=47)
+        # self.E1.place(x=40, y=130)
+        # label_1 = Label(root, text="Path")
+        # label_1.place(x=10, y=95)
 
         self.master = master
         self.init_window()
@@ -29,18 +33,20 @@ class Window(Frame):
         self.master.config(menu=menu)
         file = Menu(menu)
         file.add_command(label='Open image', command=self.load_image)
+        file.add_command(label='Identify random image', command=self.random_image)
         file.add_command(label='Exit', command=self.client_exit)
         menu.add_cascade(label='File', menu=file)
         text_box.set("Let's start!")
 
-        button_1 = Button(root, text="Select image ", command=self.load_image)
+        button_1 = Button(root, text="Select image", command=self.load_image)
         button_1.place(x=160, y=50)
 
-        label_1 = Label(root, text="Path")
-        label_1.place(x=10, y=95)
+        button_2 = Button(root, text="Identify random image", command=self.random_image)
+        button_2.place(x=135, y=95)
 
-        button_2 = Button(root, text="Identify ", command=self.decode_road_sign)
-        button_2.place(x=340, y=95)
+        # turn off manual input
+        # button_3 = Button(root, text="Identify ", command=self.decode_road_sign)
+        # button_3.place(x=340, y=130)
 
     def load_image(self):
         path = askopenfilename()
@@ -48,6 +54,18 @@ class Window(Frame):
         text_box.set(sign[0])
         Message(root, textvariable=text_box, relief=RAISED)
         self.show_image(path)
+    
+    def random_image(self):
+        file_name=str(randint(0, 12629))
+        if (len(file_name)==4): file_name = "0" + file_name
+        if (len(file_name)==3): file_name = "00" + file_name
+        if (len(file_name)==2): file_name = "000" + file_name
+        if (len(file_name)==1): file_name = "0000" + file_name
+        full_path = test_folder_path+"/"+file_name+".ppm"
+        sign = AI.recognise_road_sign(full_path)
+        text_box.set(sign[0])
+        Message(root, textvariable=text_box, relief=RAISED)
+        self.show_image(full_path)
 
     def show_image(self, path):
         load = Image.open(path).resize((64, 64))
