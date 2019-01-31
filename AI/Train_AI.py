@@ -69,7 +69,7 @@ model.add(Flatten())
 """NN"""
 model.add(Dense(128, activation='relu'))
 """dropout layer, prevents network overfitting, percentage chance to change output to 0"""
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 """final layer, collects results and fits them to every defined class"""
 model.add(Dense(number_of_categories, activation='softmax')) 
 
@@ -91,7 +91,7 @@ stopping monitor - stop training if it does not improve for nr consecutive epoch
 """
 batch_size = 128
 epochs = 50
-early_stopping_monitor = EarlyStopping(patience=2)
+early_stopping_monitor = EarlyStopping(patience=3)
 
 hist = model.fit(x_train, y_train,
                 batch_size=batch_size,
@@ -101,12 +101,12 @@ hist = model.fit(x_train, y_train,
                 validation_data=(x_validation, y_validation))
 
 """Save trained model to file"""
-model.save('road_signs_no_early_pooling.h5')
+model.save('road_signs_final.h5')
 
 """Print params of NN, visualizes the model"""
 print(model.summary())
 """need to install Grphiz, and set env path"""
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+plot_model(model, to_file='model_plot3.png', show_shapes=True, show_layer_names=True)
 
 """Evaluate the model with the test data to get the scores on "real" data."""
 score = model.evaluate(x_validation, y_validation, verbose=0)

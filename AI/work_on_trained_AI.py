@@ -129,3 +129,4 @@ def example_of_group_recognition():
     result_list = collect_results(prediction)
     print("\n".join(decode_prediction(result_list)))
 
+example_of_group_recognition()
