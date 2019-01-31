@@ -9,7 +9,7 @@ import numpy as np
 
 """ Decodes results from NN to formal output"""
 
-trained_NN_path = 'C:/MyProject/AI/road_signs_no_early_pooling.h5'
+trained_NN_path = 'C:/MyProject/AI/road_signs_final.h5'
 loaded_NN = load_model(trained_NN_path)
 
 def decode_prediction(sign_list):
