@@ -9,7 +9,7 @@ import numpy as np
 
 """ Decodes results from NN to formal output"""
 
-trained_NN_path = 'C:/MyProject/AI/road_signs_final.h5'
+trained_NN_path = 'C:/MyProject/AI/road_signs_final_batch1.h5'
 loaded_NN = load_model(trained_NN_path)
 
 def decode_prediction(sign_list):
@@ -128,5 +128,3 @@ def example_of_group_recognition():
     prediction = loaded_NN.predict(x_test)
     result_list = collect_results(prediction)
     print("\n".join(decode_prediction(result_list)))
-
-example_of_group_recognition()
